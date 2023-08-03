@@ -1,6 +1,6 @@
 chrome.runtime.onInstalled.addListener(() => {
     chrome.action.setBadgeText({
-        text: "OFF",
+        text: "DESC",
     });
 });
 const url = 'https://elakolije.rs/';
@@ -11,7 +11,7 @@ chrome.action.onClicked.addListener(async (tab) => {
         // Retrieve the action badge to check if the extension is 'ON' or 'OFF'
         const prevState = await chrome.action.getBadgeText({ tabId: tab.id });
         // Next state will always be the opposite
-        const nextState = prevState === 'ON' ? 'OFF' : 'ON'
+        const nextState = prevState === 'DESC' ? 'ASC' : 'DESC'
 
         // Set the action badge to the next state
         await chrome.action.setBadgeText({
@@ -23,7 +23,7 @@ chrome.action.onClicked.addListener(async (tab) => {
         await chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             // send message to content script to sort the products
             chrome.tabs.sendMessage(tabs[0].id, {
-                direction: nextState === 'OFF' ? 'desc' : 'asc',
+                direction: nextState === 'DESC' ? 'desc' : 'asc',
             }, function (response) {
                 console.log(response.message);
             });
