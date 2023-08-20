@@ -20,12 +20,7 @@ function sortByDiscount(direction = 'desc') {
 function addGlobalEventListeners() {
     chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
         const { direction } = msg;
-        if (direction === 'desc') {
-            sortByDiscount('desc');
-        }
-        if (direction === 'asc') {
-            sortByDiscount('asc');
-        }
+        sortByDiscount(direction);
     });
 }
 
